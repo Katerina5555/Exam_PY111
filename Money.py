@@ -8,6 +8,10 @@ class Money:
     wallet = []
 
     def __init__(self, name: Union[str, None], sum_of_money: float):
+        """
+        :param name: международное обозначение валюты
+        :param sum_of_money: сумма
+        """
         self.name = name
         self.sum_of_money = sum_of_money
         Money.wallet.append(self)
@@ -45,15 +49,13 @@ class Money:
         print("Время последнего обновления файла в источнике: "
               + dict_["Date"])
         valute_name = str(input("Введите валюту в которую хотите "
-                            "конвертировать (международное обозначение): "
+                                "конвертировать (международное обозначение): "
                                   "")).upper()
         if valute_name != "RUB":
             exchange_rate = dict_['Valute'][valute_name]['Value']
-            # print(b)
 
             if self.name != "RUB":
                 exchange_rate_to_rub = dict_['Valute'][self.name]['Value']
-                # print(exchange_rate_to_rub)
                 if self.name != valute_name:
                     value_in_rub = self.sum_of_money * exchange_rate_to_rub
                     print(f'После конвертации сумма {self.sum_of_money} {self.name} составила '
