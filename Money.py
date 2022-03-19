@@ -12,6 +12,9 @@ class Money:
         self.sum_of_money = sum_of_money
         Money.wallet.append(self)
 
+        if self.sum_of_money < 0:
+            raise ValueError("сумма не может быть отрицательной")
+
     def __repr__(self):
         return f'{self.__class__.__name__}({self.name}, ' \
                f'{self.__class__.__name__}({self.sum_of_money})'
@@ -23,7 +26,6 @@ class Money:
     @classmethod
     def __getitem__(cls):
         print(cls.wallet)
-
 
     def convert_to_valute(self):
         """
@@ -75,7 +77,8 @@ class Money:
             else:
                 print(f"Операция не проведена. Вы пытаетесь конвертировать {self.name} в {self.name}")
 
-    # def wallet(self):
+    # def sum_of_class(self):
+
 
 
 class Rubles(Money):
