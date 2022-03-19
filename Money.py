@@ -9,6 +9,7 @@ class Money:
 
     def __init__(self, name: Union[str, None], sum_of_money: float):
         """
+        Атрибуты
         :param name: международное обозначение валюты
         :param sum_of_money: сумма
         """
@@ -34,18 +35,15 @@ class Money:
         """
         Метод для конвертации валюты
         :return:
-        - уточняет наличие возможности загрузки данных;
+        - автоматическая проверка наличия связи с ресурсом:
+        -- если ответ есть - загружаются обновленные данные;
+        -- возвращается ошибка - происходит отбращение к к ранее загруженным данным CBR.json
         - выводит время последней загрузки;
         - проверяет валюту конвертации;
         - конвертирует;
         """
 
         # res = input("Есть возможность загрузить файл с сайта ЦБ РФ?").upper()
-        """
-        автоматическая проверка наличия связи с ресурсомЖ
-        - если ответ есть - загрузка обновленных данных;
-        - связи нет - данные по ранее подгруженной информации CBR.json
-        """
 
         res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js')
         print(f'Статус состояния доступа к сайту ЦБ РФ: {res.status_code}')
@@ -204,6 +202,7 @@ class Euro(Money):
         self._name = name
         self.sum_of_money = sum_of_money
         super().__init__("EUR", sum_of_money)
+
 
 class Dollar(Money):
     def __init__(self, name: Union[str, None], sum_of_money: float):
