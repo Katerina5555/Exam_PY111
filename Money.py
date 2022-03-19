@@ -74,7 +74,8 @@ class Money:
             else:
                 print(f"Операция не проведена. Вы пытаетесь конвертировать {self.name} в {self.name}")
 
-    # def sum_of_class(self):
+    # def __add__(self, other):
+
 
 
 
