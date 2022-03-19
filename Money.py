@@ -19,10 +19,6 @@ class Money:
         return f'{self.__class__.__name__}({self.name}, ' \
                f'{self.__class__.__name__}({self.sum_of_money})'
 
-    def __str__(self):
-        return f'{self.__class__.__name__}({self.sum_of_money}) ' \
-               f'{self.__class__.__name__}({self.name} '
-
     @classmethod
     def __getitem__(cls):
         print(cls.wallet)
@@ -46,7 +42,6 @@ class Money:
             open("CBR.json", 'wb').write(price.content)
 
         dict_ = json.load(open("CBR.json"))
-        # print(dict.items(dict_['Valute']['USD']))
         print("Время последнего обновления файла в источнике: "
               + dict_["Date"])
         valute_name = str(input("Введите валюту в которую хотите "
