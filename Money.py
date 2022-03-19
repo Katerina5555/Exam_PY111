@@ -74,7 +74,13 @@ class Money:
             else:
                 print(f"Операция не проведена. Вы пытаетесь конвертировать {self.name} в {self.name}")
 
-    # def __add__(self, other):
+    def __add__(self, other: "Money"):
+        if self.name == other.name:
+            return Money(self.name, self.sum_of_money + other.sum_of_money)
+        raise ValueError
+
+
+
 
 
 
