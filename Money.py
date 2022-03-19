@@ -40,9 +40,17 @@ class Money:
         - конвертирует;
         """
 
-        answer = input("Есть возможность загрузить файл с сайта ЦБ РФ?").upper()
+        # res = input("Есть возможность загрузить файл с сайта ЦБ РФ?").upper()
+        """
+        автоматическая проверка наличия связи с ресурсомЖ
+        - если ответ есть - загрузка обновленных данных;
+        - связи нет - данные по ранее подгруженной информации CBR.json
+        """
 
-        if answer == "Да":
+        res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js')
+        print(f'Статус состояния доступа к сайту ЦБ РФ: {res.status_code}')
+
+        if res:
             url = "https://www.cbr-xml-daily.ru/daily_json.js"
             price = requests.get(url, allow_redirects=True)
             open("CBR.json", 'wb').write(price.content)
@@ -91,7 +99,8 @@ class Money:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return f'{Money(self.name, self.sum_of_money + float(other.sum_of_money))}'
+        return f'Сумма запрошенных экземпляров равна ' \
+               f'{Money(self.name, self.sum_of_money + float(other.sum_of_money))}'
 
     def __mul__(self, other: Union[int, float]):
         """
@@ -100,7 +109,8 @@ class Money:
         """
         if other < 0:
             raise ValueError("Множитель не может быть меньше нуля")
-        return Money(self.name, self.sum_of_money * other)
+        return f'Произведение равно ' \
+               f'{Money(self.name, self.sum_of_money * other)}'
 
     def __truediv__(self, other: Union[int, float]):
         """
@@ -110,7 +120,8 @@ class Money:
         """
         if other <= 0:
             raise ValueError("Делитель не может быть меньше или равен нулю")
-        return Money(self.name, round((self.sum_of_money / other), 2))
+        return f'Частное от деления равно ' \
+               f'{Money(self.name, round((self.sum_of_money / other), 2))}'
 
     def __sub__(self, other: "Money"):
         """
@@ -123,7 +134,8 @@ class Money:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return f'{Money(self.name, self.sum_of_money - float(other.sum_of_money))}'
+        return f'Разница экземпляров равна ' \
+               f'{Money(self.name, self.sum_of_money - float(other.sum_of_money))}'
 
     def __ne__(self, other: "Money"):
         """
@@ -136,42 +148,48 @@ class Money:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money != other.sum_of_money
+        return f'Экземпляры между собой неравны? ' \
+               f'{self.sum_of_money != other.sum_of_money}'
 
     def __eq__(self, other: "Money"):
         if self.name != other.name:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money == other.sum_of_money
+        return f'Экземпляры между собой равны? ' \
+               f'{self.sum_of_money == other.sum_of_money}'
 
     def __lt__(self, other: "Money"):
         if self.name != other.name:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money < other.sum_of_money
+        return f'Первый экземпляр меньше второго? ' \
+               f'{self.sum_of_money < other.sum_of_money}'
 
     def __gt__(self, other: "Money"):
         if self.name != other.name:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money > other.sum_of_money
+        return f'Первый экземпляр больше второго? ' \
+               f'{self.sum_of_money > other.sum_of_money}'
 
     def __le__(self, other: "Money"):
         if self.name != other.name:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money <= other.sum_of_money
+        return f'Первый экземпляр меньше или равен второму? ' \
+               f'{self.sum_of_money <= other.sum_of_money}'
 
     def __ge__(self, other: "Money"):
         if self.name != other.name:
             Money.convert_to_valute(other, self.name)
             other.name, other.sum_of_money = Money.wallet[-1]
             Money.wallet.__delitem__(-1)
-        return self.sum_of_money >= other.sum_of_money
+        return f'Первый экземпляр больше или равен второму? ' \
+               f'{self.sum_of_money >= other.sum_of_money}'
 
 
 class Rubles(Money):
